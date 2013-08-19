@@ -16,7 +16,7 @@
 
         RewriteEngine On
         RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteRule ^(.*)$ /app_dev.php [QSA,L]
+        RewriteRule ^(.*)$ /app{% if app.Environment == 'dev' %}_dev{% endif %}.php [QSA,L]
     </Directory>
 </VirtualHost>
 
