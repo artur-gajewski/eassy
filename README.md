@@ -37,14 +37,12 @@ Then, use the `install` command to install all dependencies:
 
 Create a folder you want to install eassy to and inside it, create a 'composer.json' file. Now add the following dependencies to it:
 
-    ```json
     "require": {
         # ..
         "artur-gajewski/eassy": "dev-master"
         # ..
     }
-    ```
-
+    
 Next, obtain Composer:
 
     $ curl -s https://getcomposer.org/installer | php
