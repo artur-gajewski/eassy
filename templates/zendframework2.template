@@ -1,4 +1,4 @@
-<VirtualHost {{ app.NameVirtualHost }}>
+<VirtualHost {{ app.VirtualHost }}>
     ServerName {{ app.ServerName }}
     ServerAlias {{ app.ServerAlias }}
     ServerAdmin {{ app.ServerAdmin }}
