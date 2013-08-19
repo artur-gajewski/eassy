@@ -1,3 +1,7 @@
+
+#
+# {{ app.Description }}>
+#
 <VirtualHost {{ app.VirtualHost }}>
     ServerName {{ app.ServerName }}
     ServerAlias {{ app.ServerAlias }}
