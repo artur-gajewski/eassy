@@ -3,6 +3,8 @@ EASSY
 
 Eassy is an easy way to generate your /etc/hosts and apache virtual host files from a single JSON file.
 
+Uses Twig templates for different virtual host settings to enable flexibility.
+
 #Requirements
 
 - PHP 5.3 or later
