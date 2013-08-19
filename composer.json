@@ -1,8 +1,26 @@
 {
+    "name": "artur-gajewski/eassy",
+    "description": "A script to manage /etc/hosts and virtual host files with single JSON file. Includes Twig templates for different application frameworks.",
+    "type": "script",
+    "keywords": [
+        "apache",
+        "server",
+        "hosts"
+    ],
+    "homepage": "https://github.com/artur-gajewski/eassy",
+    "authors": [
+        {
+            "name": "Artur Gajewski",
+            "email": "info@arturgajewski.com",
+            "homepage": "https://github.com/artur-gajewski"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "twig/twig": "1.*"
+    },
     "autoload": {
         "psr-0": {"Eassy\\": "src/"}
-    },
-    "require": {
-        "twig/twig": "1.*"
     }
 }
