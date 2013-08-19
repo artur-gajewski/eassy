@@ -1,0 +1,7 @@
+.idea
+vendor
+composer.lock
+composer.phar
+settings.json
+output/hosts
+output/httpd-vhosts.conf

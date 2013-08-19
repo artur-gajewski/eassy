@@ -1,0 +1,7 @@
+<VirtualHost {{ app.NameVirtualHost }}>
+    ServerName {{ app.ServerName }}
+    ServerAlias {{ app.ServerAlias }}
+    ServerAdmin {{ app.ServerAdmin }}
+
+    DocumentRoot "{{ app.ProjectRoot }}"
+</VirtualHost>

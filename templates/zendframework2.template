@@ -1,0 +1,18 @@
+<VirtualHost {{ app.NameVirtualHost }}>
+    ServerName {{ app.ServerName }}
+    ServerAlias {{ app.ServerAlias }}
+    ServerAdmin {{ app.ServerAdmin }}
+
+    DocumentRoot "{{ app.ProjectRoot }}/public"
+    <Directory "{{ app.ProjectRoot }}/public">
+        Options FollowSymlinks Indexes Multiviews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ /index.php [QSA,L]
+    </Directory>
+</VirtualHost>
+
