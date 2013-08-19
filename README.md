@@ -79,6 +79,15 @@ In addition, Eassy will create all virtual hosts settings in seperate files.
 If you want the original files to be replaced by Eassy, you can create soft links in the output folder to
 point to the original files.
 
+#Upcoming features
+
+At the moment, Eassy creates file names that are OS specific. Upcoming features include:
+
+- Possibility to set output folder and file
+- Possibility to generate NGINX files
+- More framework templates
+- PHAR file for the app
+
 #Enjoy
 
 Enjoy Eassy and if you have any ideas or concerns please do not hesitate to contact me!
