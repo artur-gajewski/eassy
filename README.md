@@ -10,7 +10,7 @@ Uses Twig templates for different virtual host settings to enable flexibility.
 - PHP 5.3 or later
 - Composer
 
-#Installation
+#Installation from Github
 
 Clone Eassy into your development environment.
 
@@ -29,11 +29,33 @@ http://getcomposer.org/ or just run the following command:
 
     $ curl -s https://getcomposer.org/installer | php
 
-Then, use the `install` command to install all dependancies:
+Then, use the `install` command to install all dependencies:
 
     $ php composer.phar install
 
-then run the following command to display what will be generated:
+#Installing with Composer
+
+Create a folder you want to install eassy to and inside it, create a 'composer.json' file. Now add the following dependencies to it:
+
+    ```json
+    "require": {
+        # ..
+        "artur-gajewski/eassy": "dev-master"
+        # ..
+    }
+    ```
+
+Next, obtain Composer:
+
+    $ curl -s https://getcomposer.org/installer | php
+
+Finally, install eassy:
+
+    $ php composer.phar install
+
+# Generating output
+
+After installing eassy, run the following command to display what will be generated:
 
     $ php eassy.php
 
