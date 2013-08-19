@@ -33,9 +33,13 @@ Then, use the `install` command to install all dependancies:
 
     $ php composer.phar install
 
-then run the following command:
+then run the following command to display what will be generated:
 
     $ php eassy.php
+
+when you are sure you want to generate the files, run:
+
+    $ php eassy.php write
 
 #Templates
 

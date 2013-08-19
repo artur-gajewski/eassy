@@ -5,3 +5,4 @@ composer.phar
 settings.json
 output/hosts
 output/httpd-vhosts.conf
+output/app-vhost*

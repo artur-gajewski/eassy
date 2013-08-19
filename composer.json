@@ -1,4 +1,7 @@
 {
+    "autoload": {
+        "psr-0": {"Eassy\\": "src/"}
+    },
     "require": {
         "twig/twig": "1.*"
     }
