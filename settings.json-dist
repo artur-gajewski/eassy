@@ -1,4 +1,9 @@
 {
+    "Targets": {
+        "HostsMapFile": "output/hosts",
+        "VirtualHostsFile": "output/httpd-vhosts.conf",
+        "SingleVirtualHostFolder": "output"
+    },
     "Server": {
         "NameVirtualHost": "*:80"
     },

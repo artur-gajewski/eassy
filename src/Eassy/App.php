@@ -28,6 +28,24 @@ class App
      */
     private $readOnly;
 
+    /**
+     * @var
+     */
+    private $hostsMapFile;
+
+    /**
+     * @var
+     */
+    private $apacheVirtualHostsFile;
+
+    /**
+     * @var
+     */
+    private $apacheSingleVirtualHostFolder;
+
+    /**
+     * Initialize
+     */
     public function __construct()
     {
         $this->twig = new Twig_Environment(
@@ -36,6 +54,12 @@ class App
 
         $json = file_get_contents('settings.json');
         $this->settings = json_decode($json, true);
+
+        $this->hostsMapFile = (!empty($this->settings['Targets']['HostsMapFile'])) ? $this->settings['Targets']['HostsMapFile'] : 'output/hosts';
+
+        $this->apacheVirtualHostsFile = (!empty($this->settings['Targets']['ApacheVirtualHostsFile'])) ? $this->settings['Targets']['ApacheVirtualHostsFile'] : 'output/httpd-vhosts.conf';
+
+        $this->apacheSingleVirtualHostFolder = (!empty($this->settings['Targets']['ApacheSingleVirtualHostFolder'])) ? $this->settings['Targets']['ApacheSingleVirtualHostFolder'] : 'output';
     }
 
     /**
@@ -50,6 +74,12 @@ class App
         $this->generateHostsFile();
         $this->generateApacheVirtualHosts();
         $this->generateApacheVirtualHostFiles();
+
+        if ($readOnly === true) {
+            echo 'Target for host mapping file: ' . $this->hostsMapFile . PHP_EOL;
+            echo 'Target for apache virtual hosts file: ' . $this->apacheVirtualHostsFile . PHP_EOL;
+            echo 'Target folder for individual apache virtual host files: ' . $this->apacheSingleVirtualHostFolder . PHP_EOL;
+        }
     }
 
     /**
@@ -65,15 +95,15 @@ class App
         );
 
         if ($this->readOnly === false) {
-            file_put_contents('output/hosts', $output);
-            echo 'Generated output/hosts' . PHP_EOL;
+            file_put_contents($this->hostsMapFile, $output);
+            echo 'Generated ' . $this->hostsMapFile . PHP_EOL;
         } else {
             echo $output . PHP_EOL;
         }
     }
 
     /**
-     * Generate httpd-vhosts.conf file contents
+     * Generate Apache's httpd-vhosts.conf file contents
      */
     private function generateApacheVirtualHosts()
     {
@@ -86,21 +116,21 @@ class App
         );
 
         if ($this->readOnly === false) {
-            file_put_contents('output/httpd-vhosts.conf', $output);
-            echo 'Generated output/httpd-vhosts.conf' . PHP_EOL;
+            file_put_contents($this->apacheVirtualHostsFile, $output);
+            echo 'Generated ' . $this->apacheVirtualHostsFile . PHP_EOL;
         } else {
             echo $output . PHP_EOL;
         }
     }
 
     /**
-     * Generate individual  file contents
+     * Generate individual Apache virtual host file contents
      */
     private function generateApacheVirtualHostFiles()
     {
         foreach ($this->settings['Apps'] as $app) {
             $outputFile = $app['Description'];
-            $outputFile = 'app-vhost-' . $this->slugify($outputFile);
+            $outputFile = 'apache-vhost-' . $this->slugify($outputFile);
 
             $output = $this->twig->render(
                 $app['Template'] . '.template',
@@ -110,8 +140,8 @@ class App
             );
 
             if ($this->readOnly === false) {
-                file_put_contents('output/' . $outputFile, $output);
-                echo 'Generated output/' . $outputFile . PHP_EOL;
+                file_put_contents($this->apacheSingleVirtualHostFolder . '/' . $outputFile, $output);
+                echo 'Generated ' . $this->apacheSingleVirtualHostFolder . '/' . $outputFile . PHP_EOL;
             }
         }
     }
