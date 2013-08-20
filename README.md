@@ -70,20 +70,25 @@ are free to create more to suite your needs.
 
 #Output
 
-Eassy will generate the following files to output folder:
+Output files and folders can be set in the Targets section of the JSON file. Following is an example of how you can
+make Eassy generate files directly to be used by system:
 
-- hosts - contains the host mappings, same as /etc/hosts
-- httpd-vhosts.conf - Apache virtual hosts file
+    "Targets": {
+        "HostsMapFile": "/etc/hosts",
+        "ApacheVirtualHostsFile": "/etc/apache2/extra/httpd-vhosts.conf",
+        "ApacheSingleVirtualHostFolder": "/etc/apache2/sites-available",
+        "NginxSingleVirtualHostFolder": "/etc/nginx/sites-available"
+    },
 
-In addition, Eassy will create all virtual hosts settings in seperate files.
-If you want the original files to be replaced by Eassy, you can create soft links in the output folder to
-point to the original files.
+If any of these are empty or missing, system will use the following defaults:
+
+- HostsMapFile: output/hosts
+- ApacheVirtualHostsFile: output/httpd-vhosts.conf
+- ApacheSingleVirtualHostFolder: output
+- NginxSingleVirtualHostFolder: output
 
 #Upcoming features
 
-At the moment, Eassy creates file names that are OS specific. Upcoming features include:
-
-- Possibility to set output folder and file
 - Possibility to generate NGINX files
 - More framework templates
 - PHAR file for the app
