@@ -84,12 +84,11 @@ If any of these are empty or missing, system will use the following defaults:
 
 - HostsMapFile: output/hosts
 - ApacheVirtualHostsFile: output/httpd-vhosts.conf
-- ApacheSingleVirtualHostFolder: output
-- NginxSingleVirtualHostFolder: output
+- ApacheSingleVirtualHostFolder: output/apache
+- NginxSingleVirtualHostFolder: output/nginx
 
 #Upcoming features
 
-- Possibility to generate NGINX files
 - More framework templates
 - PHAR file for the app
 
