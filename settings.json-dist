@@ -1,24 +1,28 @@
 {
     "Targets": {
         "HostsMapFile": "output/hosts",
-        "VirtualHostsFile": "output/httpd-vhosts.conf",
-        "SingleVirtualHostFolder": "output"
+        "ApacheVirtualHostsFile": "output/apache/httpd-vhosts.conf",
+        "ApacheSingleVirtualHostFolder": "output/apache",
+        "NginxSingleVirtualHostFolder": "output/nginx"
     },
+
     "Server": {
         "NameVirtualHost": "*:80"
     },
+
     "Hosts": [
         {
             "Address": "127.0.0.1",
             "ServerName": "localhost"
         }
     ],
+
     "Apps": [
         {
             "Description": "This is just a localhost",
             "Template": "default",
             "Environment": "dev",
-            "VirtualHost": "*:80",
+            "VirtualHostListen": "80",
             "ServerName": "localhost",
             "ServerAlias": "localhost",
             "ServerAdmin": "admin@email.com",

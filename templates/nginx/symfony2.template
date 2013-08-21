@@ -1,0 +1,41 @@
+
+#
+# {{ app.Description }}>
+#
+server {
+    listen      {{ app.VirtualHostListen }};
+    server_name {{ app.ServerName }};
+    root        {{ app.ProjectRoot }}/web;
+
+    # Max POST size.
+    # Remember to also set post_max_size, upload_max_filesize and memory_limit in php.ini
+    # post_max_size and this value should be greater than upload_max_size
+    client_max_body_size 1510M;
+
+    error_log  /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+
+    location /stub_status {
+      stub_status on;
+      access_log off;
+    }
+    location / {
+        index app{% if app.Environment == 'dev' %}_dev{% endif %}.php;
+        try_files $uri @rewriteapp;
+    }
+
+    location @rewriteapp {
+        rewrite ^(.*)$ /app{% if app.Environment == 'dev' %}_dev{% endif %}.php/$1 last;
+    }
+
+    location ~* \.php(/|$) {
+        fastcgi_pass             unix:/tmp/phpfpm.sock;
+        fastcgi_split_path_info  ^(.+\.php)(/.*)$;
+
+        include fastcgi_params;
+
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  HTTPS            off;
+
+    }
+}

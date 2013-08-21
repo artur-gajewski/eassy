@@ -20,6 +20,6 @@
 NameVirtualHost {{ server.NameVirtualHost }}
 
 {% for app in apps %}
-    {% include app.Template ~ '.template' %}
+    {% include 'apache/' ~ app.Template ~ '.template' %}
 {% endfor %}
 

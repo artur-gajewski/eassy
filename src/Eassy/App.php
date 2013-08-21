@@ -44,6 +44,11 @@ class App
     private $apacheSingleVirtualHostFolder;
 
     /**
+     * @var
+     */
+    private $nginxSingleVirtualHostFolder;
+
+    /**
      * Initialize
      */
     public function __construct()
@@ -57,9 +62,11 @@ class App
 
         $this->hostsMapFile = (!empty($this->settings['Targets']['HostsMapFile'])) ? $this->settings['Targets']['HostsMapFile'] : 'output/hosts';
 
-        $this->apacheVirtualHostsFile = (!empty($this->settings['Targets']['ApacheVirtualHostsFile'])) ? $this->settings['Targets']['ApacheVirtualHostsFile'] : 'output/httpd-vhosts.conf';
+        $this->apacheVirtualHostsFile = (!empty($this->settings['Targets']['ApacheVirtualHostsFile'])) ? $this->settings['Targets']['ApacheVirtualHostsFile'] : 'output/apache/httpd-vhosts.conf';
 
-        $this->apacheSingleVirtualHostFolder = (!empty($this->settings['Targets']['ApacheSingleVirtualHostFolder'])) ? $this->settings['Targets']['ApacheSingleVirtualHostFolder'] : 'output';
+        $this->apacheSingleVirtualHostFolder = (!empty($this->settings['Targets']['ApacheSingleVirtualHostFolder'])) ? $this->settings['Targets']['ApacheSingleVirtualHostFolder'] : 'output/apache';
+
+        $this->nginxSingleVirtualHostFolder = (!empty($this->settings['Targets']['NginxSingleVirtualHostFolder'])) ? $this->settings['Targets']['NginxSingleVirtualHostFolder'] : 'output/nginx';
     }
 
     /**
@@ -72,13 +79,15 @@ class App
         $this->readOnly = $readOnly;
 
         $this->generateHostsFile();
-        $this->generateApacheVirtualHosts();
-        $this->generateApacheVirtualHostFiles();
+        $this->generateApacheVirtualHostsFile();
+        $this->generateSingleApacheVirtualHostFiles();
+        $this->generateSingleNginxVirtualHostFiles();
 
         if ($readOnly === true) {
             echo 'Target for host mapping file: ' . $this->hostsMapFile . PHP_EOL;
             echo 'Target for apache virtual hosts file: ' . $this->apacheVirtualHostsFile . PHP_EOL;
-            echo 'Target folder for individual apache virtual host files: ' . $this->apacheSingleVirtualHostFolder . PHP_EOL;
+            echo 'Target folder for individual Apache virtual host files: ' . $this->apacheSingleVirtualHostFolder . PHP_EOL;
+            echo 'Target folder for individual Nginx virtual host files: ' . $this->nginxSingleVirtualHostFolder . PHP_EOL;
         }
     }
 
@@ -105,10 +114,10 @@ class App
     /**
      * Generate Apache's httpd-vhosts.conf file contents
      */
-    private function generateApacheVirtualHosts()
+    private function generateApacheVirtualHostsFile()
     {
         $output = $this->twig->render(
-            'virtual_hosts.template',
+            'apache/virtual_hosts.template',
             array(
                 'server' => $this->settings['Server'],
                 'apps' => $this->settings['Apps']
@@ -126,14 +135,14 @@ class App
     /**
      * Generate individual Apache virtual host file contents
      */
-    private function generateApacheVirtualHostFiles()
+    private function generateSingleApacheVirtualHostFiles()
     {
         foreach ($this->settings['Apps'] as $app) {
             $outputFile = $app['Description'];
-            $outputFile = 'apache-vhost-' . $this->slugify($outputFile);
+            $outputFile = 'vhost-' . $this->slugify($outputFile);
 
             $output = $this->twig->render(
-                $app['Template'] . '.template',
+                'apache/' . $app['Template'] . '.template',
                 array(
                     'app' => $app
                 )
@@ -142,6 +151,29 @@ class App
             if ($this->readOnly === false) {
                 file_put_contents($this->apacheSingleVirtualHostFolder . '/' . $outputFile, $output);
                 echo 'Generated ' . $this->apacheSingleVirtualHostFolder . '/' . $outputFile . PHP_EOL;
+            }
+        }
+    }
+
+    /**
+     * Generate individual Nginx virtual host file contents
+     */
+    private function generateSingleNginxVirtualHostFiles()
+    {
+        foreach ($this->settings['Apps'] as $app) {
+            $outputFile = $app['Description'];
+            $outputFile = 'vhost-' . $this->slugify($outputFile);
+
+            $output = $this->twig->render(
+                'nginx/' . $app['Template'] . '.template',
+                array(
+                    'app' => $app
+                )
+            );
+
+            if ($this->readOnly === false) {
+                file_put_contents($this->nginxSingleVirtualHostFolder . '/' . $outputFile, $output);
+                echo 'Generated ' . $this->nginxSingleVirtualHostFolder . '/' . $outputFile . PHP_EOL;
             }
         }
     }

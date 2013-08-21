@@ -1,6 +1,6 @@
-# Output folder for the generated files
+# Output folder for the generated Apache files
 
-This folder is the folder where generated files will be placed to.
+This folder is the folder where generated Apache files will be placed to.
 
 If you want the original files to be replaced by Eassy, you can create soft links to the original files.
 
