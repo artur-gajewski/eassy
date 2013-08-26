@@ -1,0 +1,22 @@
+
+#
+# Kuvaverkko>
+#
+<VirtualHost *:80>
+    ServerName kuvaverkko.localhost
+    ServerAlias kuvaverkko.localhost
+    ServerAdmin info@arturgajewski.com
+
+    DocumentRoot "/Users/artur/workspace/kj14/public"
+    <Directory "/Users/artur/workspace/kj14/public">
+        Options FollowSymlinks Indexes Multiviews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ /index.php [QSA,L]
+    </Directory>
+</VirtualHost>
+

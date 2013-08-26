@@ -1,0 +1,22 @@
+
+#
+# Zend Framework 2 Skeleton Application>
+#
+<VirtualHost *:80>
+    ServerName zendframework2-skeleton.localhost
+    ServerAlias zendframework2-skeleton.localhost
+    ServerAdmin info@arturgajewski.com
+
+    DocumentRoot "/Users/artur/workspace/zendframework2-skeleton/public"
+    <Directory "/Users/artur/workspace/zendframework2-skeleton/public">
+        Options FollowSymlinks Indexes Multiviews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ /index.php [QSA,L]
+    </Directory>
+</VirtualHost>
+

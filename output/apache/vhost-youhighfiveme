@@ -1,0 +1,22 @@
+
+#
+# YouHighFiveMe>
+#
+<VirtualHost *:80>
+    ServerName youhighfiveme.localhost
+    ServerAlias youhighfiveme.localhost
+    ServerAdmin info@arturgajewski.com
+
+    DocumentRoot "/Users/artur/workspace/youhighfiveme/web"
+    <Directory "/Users/artur/workspace/youhighfiveme/web">
+        Options FollowSymlinks Indexes Multiviews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ /app_dev.php [QSA,L]
+    </Directory>
+</VirtualHost>
+

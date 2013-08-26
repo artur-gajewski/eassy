@@ -1,0 +1,22 @@
+
+#
+# Cobase>
+#
+<VirtualHost *:80>
+    ServerName cobase.localhost
+    ServerAlias cobase.localhost
+    ServerAdmin info@arturgajewski.com
+
+    DocumentRoot "/Users/artur/workspace/cobase/web"
+    <Directory "/Users/artur/workspace/cobase/web">
+        Options FollowSymlinks Indexes Multiviews
+        AllowOverride None
+        Order allow,deny
+        allow from all
+
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteRule ^(.*)$ /app_dev.php [QSA,L]
+    </Directory>
+</VirtualHost>
+
